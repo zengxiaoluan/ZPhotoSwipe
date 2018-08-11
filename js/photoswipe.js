@@ -80,7 +80,8 @@ jQuery(function($) {
 	};
 
 	// my custom photo swipe
-	$(document).on('click', '#page img', function () {
+	var selectors = '#primary img'
+	$(document).on('click', selectors, function () {
 		new ZSwipe({
 			currentImg: $(this)
 		});
@@ -109,11 +110,11 @@ jQuery(function($) {
 	}
 	ZSwipe.prototype.getItems = function () {
 		var self = this
-		$('#page img').each(function () {
+		$(selectors).each(function () {
 			self.items.push({
 				src: $(this).attr('src'),
-				w: $(this).attr('width'),
-				h: $(this).attr('height')
+				w: $(this).attr('width') || 300,
+				h: $(this).attr('height') || 300
 			})
 		})
 	}
