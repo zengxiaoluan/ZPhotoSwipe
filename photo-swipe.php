@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: PhotoSwipe Light
+ * Plugin Name: ZPhotoSwipe
  * Description: A very light implementation of PhotoSwipe javascript plugin for WordPress
- * Version: 4.1.1.1
- * Author: Louy Alakkad
- * Author URI: http://l0uy.com/
+ * Version: 0.0.1
+ * Author: zengxiaoluan
+ * Author URI: https://zengxiaoluan.com/
  */
-define('PHOTOSWIPE_VERSION', '4.1.1.1');
+define('PHOTOSWIPE_VERSION', '0.0.1');
 
 function photoswipe_enqueue() {
 	if( !is_admin() ) {

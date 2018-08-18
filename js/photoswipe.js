@@ -88,6 +88,8 @@ jQuery(function($) {
 	})
 
 	function ZSwipe (settings) {
+		if (!settings) return;
+		
 		this.settings = settings
 		this.items = []
 		this.index = 0
@@ -96,7 +98,29 @@ jQuery(function($) {
 		this.getIndex()
 
 		var options = {
-			index: this.index
+			index: this.index,
+			addCaptionHTMLFn: function(item, captionEl, isFake) {
+				if(!item.title) {
+					captionEl.children[0].innerHTML = '';
+					return false;
+				}
+				captionEl.children[0].innerHTML = item.title;
+				return true;
+			},
+			getThumbBoundsFn: function(index) {
+				// find thumbnail element
+				var thumbnail = document.querySelectorAll(selectors)[index];
+
+				// get window scroll Y
+				var pageYScroll = window.pageYOffset || document.documentElement.scrollTop; 
+				// optionally get horizontal scroll
+			
+				// get position of element relative to viewport
+				var rect = thumbnail.getBoundingClientRect(); 
+			
+				// w = width
+				return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+			},
 		}
 		new PhotoSwipe( $('.pswp').get(0), PhotoSwipeUI_Default, this.items, options).init();
 	}
@@ -114,8 +138,44 @@ jQuery(function($) {
 			self.items.push({
 				src: $(this).attr('src'),
 				w: $(this).attr('width') || 300,
-				h: $(this).attr('height') || 300
+				h: $(this).attr('height') || 300,
+				title: $(this).parents('figure').find('figcaption').text() || '暂无图片说明'
 			})
+		})
+	}
+	ZSwipe.prototype.photoswipeParseHash = function() {
+		var hash = window.location.hash.substring(1),
+		params = {};
+
+		if(hash.length < 5) { // pid=1
+			return params;
+		}
+
+		var vars = hash.split('&');
+		for (var i = 0; i < vars.length; i++) {
+			if(!vars[i]) {
+				continue;
+			}
+			var pair = vars[i].split('=');  
+			if(pair.length < 2) {
+				continue;
+			}           
+			params[pair[0]] = pair[1];
+		}
+
+		if(params.gid) {
+			params.gid = parseInt(params.gid, 10);
+		}
+
+		return params;
+	};
+
+	var gallery = new ZSwipe();
+	var hash = gallery.photoswipeParseHash();
+
+	if (hash.gid && hash.pid) {
+		new ZSwipe({
+			currentImg: $(selectors).eq(hash.pid-1)
 		})
 	}
 });
