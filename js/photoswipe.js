@@ -139,7 +139,8 @@ jQuery(function($) {
 				src: $(this).attr('src'),
 				w: $(this).attr('width') || 300,
 				h: $(this).attr('height') || 300,
-				title: $(this).parents('figure').find('figcaption').text() || '暂无图片说明'
+				title: $(this).parents('figure').find('figcaption').text() || '暂无图片说明',
+				msrc: $(this).attr('src')
 			})
 		})
 	}

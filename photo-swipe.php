@@ -2,11 +2,11 @@
 /**
  * Plugin Name: ZPhotoSwipe
  * Description: A very light implementation of PhotoSwipe javascript plugin for WordPress
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: zengxiaoluan
  * Author URI: https://zengxiaoluan.com/
  */
-define('PHOTOSWIPE_VERSION', '0.0.1');
+define('PHOTOSWIPE_VERSION', '0.0.2');
 
 function photoswipe_enqueue() {
 	if( !is_admin() ) {
